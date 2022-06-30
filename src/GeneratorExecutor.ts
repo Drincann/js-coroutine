@@ -20,7 +20,7 @@ export class Coroutine<RT> {
 
   execute(): MPromise<RT> {
     return new MPromise((resolve, reject) => {
-      const next = (value: any) => {
+      const next = (value?: any) => {
         const result = this.coroutine.next(value);
         if (result.done) {
           resolve(result.value);
@@ -39,9 +39,7 @@ export class Coroutine<RT> {
             next(result.value);
           }
         }
-      };
-
-      next(undefined);
+      }; next();
     });
   }
 }
