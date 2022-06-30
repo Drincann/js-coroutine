@@ -18,6 +18,9 @@ export class MPromise<T = any> implements Thenable<T> {
       reject: (error: any) => void,
     ) => void
   ) {
+    setImmediate(() => this.executeResolver(resolver));
+  }
+  private executeResolver(resolver: (resolve: (value: MPromise<T> | T) => void, reject: (error: any) => void) => void) {
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
     } catch (error) {
