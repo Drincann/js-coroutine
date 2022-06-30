@@ -1,4 +1,4 @@
-interface Thenable<T = any> {
+export interface Thenable<T = any> {
   then<RT>(
     onFulfilled?: (value: T) => Thenable<RT> | RT | null | undefined | void,
     onRejected?: (error: any) => Thenable<RT> | RT | null | undefined | void,
