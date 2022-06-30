@@ -18,7 +18,11 @@ export class MPromise<T = any> implements Thenable<T> {
       reject: (error: any) => void,
     ) => void
   ) {
-    resolver(this.resolve.bind(this), this.reject.bind(this));
+    try {
+      resolver(this.resolve.bind(this), this.reject.bind(this));
+    } catch (error) {
+      this.reject(error);
+    }
   }
 
   private reject(error: any) {
