@@ -1,5 +1,5 @@
-import { MPromise, Thenable } from "./Promise";
-import { Thunk } from "./Thunk";
+import { MPromise, Thenable } from ".";
+import { Thunk } from ".";
 
 function isGenerator(value: any): value is Generator<any, any, any> {
   return typeof value?.next === 'function' && typeof value?.throw === 'function';
