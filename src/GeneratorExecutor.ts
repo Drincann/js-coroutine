@@ -1,4 +1,5 @@
 import { MPromise, Thenable } from "./Promise";
+import { Thunk } from "./Thunk";
 
 function isGenerator(value: any): value is Generator<any, any, any> {
   return typeof value?.next === 'function' && typeof value?.throw === 'function';
@@ -34,6 +35,15 @@ export class Coroutine<RT> {
           } else if (Coroutine.isCoroutine(result.value)) {
             // coroutine instance
             result.value.execute().then(next, reject);
+          } else if (Thunk.isThunk(result.value)) {
+            // thunk instance
+            result.value.thunk((err, value) => {
+              if (err) {
+                reject(err);
+              } else {
+                next(value);
+              }
+            })
           } else {
             // value
             next(result.value);
