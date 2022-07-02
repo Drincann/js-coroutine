@@ -1,4 +1,4 @@
-import { Coroutine, MPromise } from "./src";
+import { Coroutine, MPromise, Thunk, ThunkCallback } from "./src";
 
 // test cases
 class TestPromise {
@@ -111,7 +111,38 @@ async function TestCasesClassRunner(TestClass: any) {
   }
 }
 
+class TestThunk {
+  public async test1() {
+    const o = {};
+    const returnO = (cbk: ThunkCallback) => cbk(null, o);
+    const thunk = Thunk.toThunk(returnO)().thunk;
+    const result1 = await new Promise((resolve, reject) => {
+      thunk((error, value) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(value);
+        }
+      });
+    });
+    const result2 = await new Promise((resolve, reject) => {
+      returnO((error, value) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(value);
+        }
+      });
+    });
+    if (result1 !== result2 || result1 !== o) {
+      throw { message: "test1" };
+    }
+  }
+}
+
+
 (async () => {
   await TestCasesClassRunner(TestPromise);
   await TestCasesClassRunner(TestCoroutine);
+  await TestCasesClassRunner(TestThunk);
 })()
