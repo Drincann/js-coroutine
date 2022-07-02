@@ -9,17 +9,17 @@ function isThenable(value: any): value is Thenable<any> {
   return typeof value?.then === 'function';
 }
 
-export class Coroutine<RT> {
+export class Coroutine<T> {
   static isCoroutine(value: any): value is Coroutine<any> {
     return value instanceof Coroutine;
   }
 
-  private coroutine: Generator<any, RT, any>;
-  public constructor(gen: Generator<any, RT, any>) {
+  private coroutine: Generator<any, T, any>;
+  public constructor(gen: Generator<any, T, any>) {
     this.coroutine = gen;
   }
 
-  execute(): MPromise<RT> {
+  execute(): MPromise<T> {
     return new MPromise((resolve, reject) => {
       const next = (value?: any) => {
         const result = this.coroutine.next(value);
