@@ -1,5 +1,5 @@
-export type ThunkFn<T = any> = (callback: (error: any, value: T) => void) => void;
 export type ThunkCallback<T = any> = (error: any, value: T) => void;
+export type ThunkFn<T = any> = (callback: ThunkCallback<T>) => void;
 
 export class Thunk<T = any> {
   public static toThunk<T>(
