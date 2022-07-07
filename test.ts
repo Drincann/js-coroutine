@@ -62,9 +62,9 @@ class TestCoroutine {
     let o = {};
     let result = await new Coroutine((function* () {
       return o;
-    })()).execute();
+    })());
     if (result !== o) {
-      throw { message: "test1" };
+      throw { message: `expect ${o}, but got ${result}` };
     }
   }
 
@@ -73,10 +73,10 @@ class TestCoroutine {
     try {
       let result = await new Coroutine((function* () {
         throw o;
-      })()).execute();
+      })());
     } catch (error) {
       if (error !== o) {
-        throw { message: "test2" };
+        throw { message: `expect ${o}, but got ${error}` };
       }
     }
   }
