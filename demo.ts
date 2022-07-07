@@ -31,10 +31,9 @@ new Coroutine(setMultiTimerSync([
   { ms: 1000, message: 'timer1' },
   { ms: 2000, message: 'timer2' },
   { ms: 3000, message: 'timer3' },
-]))
-  .execute().then((v) => {
-    console.log(v);
-    console.log('returned value from coroutine');
-  }, (e) => {
-    console.log(e);
-  });
+])).then((v) => {
+  console.log(v);
+  console.log('returned value from coroutine');
+}, (e) => {
+  console.log(e);
+});
